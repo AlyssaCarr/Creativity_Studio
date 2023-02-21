@@ -1,0 +1,36 @@
+---
+title: 'Creativity Studio: Art Deco'
+author: "Alyssa Carr"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r}
+library(qualtRics)
+library(tidyverse)
+library(janitor)
+library(skimr)
+library(dplyr)
+library(gt)
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r}
+read_rds(creativity, file = "data/creativity.rds")
+```
+
+```{r}
+creativity %>% 
+  tabyl(q11)
+```
+
+```{r}
+creativity %>% 
+  summarize(mean_age = mean(q11,
+                  na.rm = TRUE))
+```
+
