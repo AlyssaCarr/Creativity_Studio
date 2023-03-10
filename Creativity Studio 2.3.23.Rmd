@@ -2,7 +2,11 @@
 title: "Creativity Studio Report"
 author: "Alyssa Carr"
 date: "`r Sys.Date()`"
-output: html_document
+output: 
+  html_document:
+    theme: readable
+    toc: TRUE
+    toc_float: TRUE
 ---
 
 ```{r setup, include=FALSE}
@@ -39,6 +43,8 @@ library(distill)
 library(pagedown)
 library(xaringan)
 library(flexdashboard)
+library(imager)
+library(kableExtra)
 ```
 
 ```{r}
@@ -47,6 +53,8 @@ cssurvey <- read_excel("data_raw/cssurvey.xlsx")
 csobservation <- read_excel("data_raw/csobservation.xlsx")
 
 csinterview <- read_excel("data_raw/csinterview.xlsx")
+
+covesage <- read_csv("data_raw/Nelson_Atkins_values_February.csv")
 
 ```
 
@@ -70,112 +78,251 @@ creativity_studio_all_instruments <- creativity_studio_all_instruments %>%
   filter(what_is_your_age >= 18)
 ```
 
-
 ![](https://live.staticflickr.com/65535/52207435391_d0a50c203c_h.jpg)
 
 # About this report
 
 This report presents findings from a study of visitors to the *Creativity Studio*. Two iterations of the *Creativity Studio* were evaluated, one connected to the *Weaving Splendor: Treasures of Asian Textiles* special exhibition, and one connected to the *American Art Deco: Designing for the People 1918 - 1939* special exhibition. While each exhibition focused on different art objects and different eras both iterations of the *Creativity Studio* provided a space for visitors to get hands-on after being inspired by the exhibitions they had just viewed. 
 
-In the *Weaving Splendor* exhibition visitors were able to view rarely seen Chinese, Indian, Japanese, Persian, and Turkish clothing and textiles from *The Nelson-Atkins Museum of Art's* collection. The adjoining *Creativity Studio* encouraged visitors to design their own garment, weave on a six-foot-tall loom, embroider around a large table, or watch process videos that offered glimpses into the creative practices of artists from around the world. 
+The *Creativity Studio* was designed in response to Audience research conducted from 2017-2021. This research was used to create visitor profiles (also referred to as psychographic profiles) of what visitors want from a museum experience at the *Nelson-Atkins Museum of Art*. This study found that there were two groups of visitors who we could engage further through programming. The *Creativity Studio* was developed in part due to this research as a way for visitors to get hands-on as well, as provide a space for social engagement.
 
-In the *American Art Deco* exhibition visitors were viewed works of art, design, and architecture of the Art Deco era. The *Creativity Studio* at the end of the exhibition offered a participatory space in order to foster creativity, social connections, and informal learning. Visitors were encouraged to "mix and match" building blocks to design their own Art Deco city, design their own building topper, view projections of 1920's and 1930's Kansas City, read books, and relax.
+In the *Weaving Splendor* exhibition visitors were able to view rarely seen Chinese, Indian, Japanese, Persian, and Turkish clothing and textiles from *The Nelson-Atkins Museum of Art's* collection. The adjoining *Creativity Studio* encouraged visitors to design their own garment, weave on a six-foot-tall loom, embroider around a large table, or watch process videos that offered glimpses into the creative practices of artists from around the world.
 
+In the *American Art Deco* exhibition visitors viewed works of art, design, and architecture of the Art Deco era. The *Creativity Studio* at the end of the exhibition offered a participatory space in order to foster creativity, social connections, and informal learning. Visitors were encouraged to "mix and match" building blocks to design their own Art Deco city, design their own building topper, view projections of 1920's and 1930's Kansas City, read books, and relax.
 
 # Methodology
 
-In each iteration of the evaluation visitor observations were utilized to determine how people move about the space and interact with the items available. During the *American Art Deco* evaluation additional surveys and interviews were used to get a more robust picture of visitor's perceptions of the space. 162 visitor groups were observed using the *Weaving Splendor Creativity Studio*. In total, 145 visitor groups were observed using the *Art Deco Creativity Studio*, 100 visitor groups completed a survey of their experience, and 8 visitor groups participated in a semi-structured interview. 10 visit groups declined to take part in the visitor survey reducing the number from 110 to 100. Of the 10 visitors who chose not to participate 5 were in a rush, 4 did not provide a reason, and one felt that they did not do enough in the Creativity Studio to evaluate it.
+In each iteration of the evaluation, visitor observations were utilized to determine how people move about the space and interact with the items available. During the *American Art Deco* evaluation additional surveys and interviews were used to get a more robust picture of visitor's perceptions of the space. 
+
+162 visitor groups were observed using the *Weaving Splendor Creativity Studio*. In total, 145 visitor groups were observed using the *Art Deco Creativity Studio*, 100 visitor groups completed a survey of their experience, and 8 visitor groups participated in a semi-structured interview. ^[10 visit groups declined to take part in the visitor survey reducing the number from 110 to 100. Of the 10 visitors who chose not to participate 5 were in a rush, 4 did not provide a reason, and one felt that they did not do enough in the Creativity Studio to evaluate it.] Exit survey data from COVES (Collaboration for Ongoing Visitor Experience Study) was used to determine additional satisfaction data as well as self-selected psychographic segments. 
+
+COVES is a year round exit survey that is designed to unite museums across the country to systematically collect, analyze, and report on visitor experience data. COVES data will be used in this report to compare *Art Deco Creativity Studio* demographic, and satisfaction data to general audience demographic and satisfaction data. In 2020 Audience Research was conducted and used to create 4 psychographic segments that describe art museum audiences in the Kansas City Metro area. These segments will be used with COVES to identify the segments of visitors to each *Creativity Studio*. 
 
 # Report Structure
 
-Due to the addition of surveys and interviews in the *Art Deco Creativity Studio* more of the charts and tables presented below will refer to this iteration of the project. Demographic and activity data referring to the *Art Deco Creativity Studio* include data from both interviews and surveys. Observation data of *Weaving Splendor* and *Art Deco* will be presented first, followed by *Art Deco* interview and survey data. 
+Discussion of COVES (Collaboration for Ongoing Visitor Experience Studies) data will be presented first followed by observation data of *Weaving Splendor* and *Art Deco*, then *Art Deco* interview and survey data. The report will conclude with a Findings and Recommendations section followed by an Appendix.
 
-# Creativity Studio Observations
+Due to the addition of surveys and interviews in the *Art Deco Creativity Studio* more of the charts and tables presented here will refer to this iteration of the project. Demographic and activity data referring to the *Art Deco Creativity Studio* include data from both interviews and surveys. 
+
+# COVES Exit Surveys
+
+COVES is a survey given to visitors to the *Nelson-Atkins* as they are finishing their visit and leaving the museum. This is often referred to as an Exit Survey. COVES is managed by the *Museum of Science, Boston*. COVES provides common survey questions for art museums across the country in order to better compare to the nationwide field of art museums. COVES offers two measures of visitor satisfaction the Net Promoter Score (NPS), and an Overall Experience Rating (OER). Both of these scores allow visitors to rate their overall satisfaction with their museum visit.
+
+```{r}
+tribble(
+  ~Exhibition, ~NPS, ~OER,
+  "General Visitors", "86.9", "91%",
+  "Weaving Splendor", "94.8", "92%",
+  "Art Deco", "89.7", "93%",
+  "Weaving Splendor Creativity Studio", "100", "100%",
+  "Art Deco Creativity Studio", "100", "100%"
+) %>% 
+  kbl() %>% 
+  kable_material_dark()
+```
+
+As of the writing of this report visitors gave the museum an NPS rating of 86.9 out of 100, and a combined score of 91% excellent and outstanding ratings for the OER. When looking at NPS and OER scores for the *Weaving Splendor* exhibition we see a jump to 94.8 NPS and 92% OER scores. When looking at NPS and OER scores for the *Art Deco* exhibition we see a jump in NPS ratings from 86.9 for general visitors to 89.7 for those who attended *Art Deco*, and 93% OER scores. For visitors who said they attended the *Weaving Splendor* and the *Art Deco Creativity Studio*s we see a further jump to a 100 out of 100 NPS score, and 100% excellent and outstanding scores for OER, indicating that visitors were extremely satisfied with both versions of the *Creativity Studio*.
+
+```{r}
+tribble(
+  ~Exhibition, ~Museum_Seeking_Learner, ~Social_Art_Goer, ~Personal_Impact_Creative, ~Low_Pressure_Connector,
+  "General Visitors", "72%", "13%", "9%", "6%",
+ "Weaving Splendor", "80%", "11%", "6%", "3%",
+ "Weaving Splendor Creativity Studio", "70%", "15%", "15%", "0%",
+ "Art Deco", "64%", "13%", "13%", "11%",
+ "Art Deco Creativity Studio", "50%", "38%", "0%", "13%",
+) %>% 
+  kbl() %>% 
+  kable_material_dark()
+```
+
+The COVES survey asks visitors to self-identify as belonging to one of the four profiles developed in our Audience Research. These groups are: Museum Seeking Learners, Social Art-Goers, Personal-Impact Creatives, and Low-Pressure Connectors. Of these four groups the *Creativity Studio* attempted to attract more Social Art-Goers, and Personal-Impact Creatives.
+
+-   Museum Seeking Learners are described as being a "typical" museum goer. They enjoy expanding their worldview and growing as a person. They enjoy having their curiosity sparked and learning something new. 
+    - The chart above shows that *Art Deco* and the *Art Deco Creativity Studio* attracted less of these visitors than other exhibitions.
+-   Social Art-Goers enjoy bonding with others through art, making memories, and finding common ground. In an art museum they like exploring new ways to spend their time that incorporates avenues for socializing, talking, and sharing different perspectives. 
+    - The *Art Deco Creativity Studio* attracted far more social art-goers than any other exhibition.
+-   Personal-Impact Creatives find it important to support the local community and embrace human diversity. They enjoy immersive experiences that feel personal and emotional. In an art museum they seek out creative, hands-on activities and prefer guiding their own experience. 
+    - There was an increase in personal-impact creatives for the *Weaving Splendor Creativity Studio* and the *Art Deco* exhibition. Surprisingly, there were no personal-impact creatives for the *Art Deco Creativity Studio*.
+-   Low-Pressure Connectors enjoy familiar and relaxing activities with friends and family. They may not typically attend art museum, but when they do they look for art with universal themes. 
+    - The *Art Deco* exhibition and the connecting *Art Deco Creativity Studio* had a large increase in low-pressure connector attendance from the other exhibitions.
+
+# Observations
 
 Observations were designed to answer the following questions:
 
-- Who is attending the *Creativity Studio*?
-- How long do visitors spend in teh studio?
-- What stations do visitors interact with?
-- HOw did visitors interact with the stations?
-- Were station instructions clear?
+-   Who is attending the *Creativity Studio*?
+-   How long do visitors spend in the studio?
+-   What stations do visitors interact with?
+-   How did visitors interact with the stations?
+-   Were station instructions clear?
 
-Observations of the *Weaving Splendor Creativity Studio* took place from October 14, 2021 to January 28, 2022. 162 visitor groups were observed using the space. These visitor groups represented 326 individual visitors to the space. The majority of the time (91%) the space had a small number of visitors at a time - anywhere between 1 and 5 visitors. Visual observation of visitor ages suggest that 10% of visitors were children while adults represented 90% of participants. 
+Observations of the *Weaving Splendor Creativity Studio* took place from October 14, 2021 to January 28, 2022. 162 visitor groups were observed using the space. These visitor groups represented 326 individual visitors to the space. The majority of the time (91%) the space had a small number of visitors at a time - anywhere between 1 and 5 visitors. Visual observation of visitor ages suggest that 10% of visitors were children while adults represented 90% of participants.
 
-Add the same section as above for Art Deco
+Observations of the *Art Deco Creativity Studio* took place from September 12, 2022 to December 12, 2022. 145 visitor groups were observed using the space during this time. These visitor groups represented 250 individuals to the space, 176 adults, 42 children, and 32 teenagers. Visual observation of visitor ages suggests that 30% of visitors were children while adults represented 70% of visitors.
 
-## Time Spent in Studio
+##### Finding 
 
-Add a chart of both studios here
+A majority of visitors to both versions of the *Creativity Studio* were adults. The *Creativity Studio* was designed to appeal to Personal-Impact Creatives and Social Art-Goers without regard to age. Many visitors in interviews emphasized that they thought the spaces were for children. However, the spaces were utilized by mostly adults. 
 
-## What did visitors do in the studio?
+### Time Spent in Studio
 
-Add in charts of activities and heat maps
+When observing the *Creativity Studio* data collectors began their observations as soon as a visit group entered the space. Many of these groups walked straight through the space in order to exit the exhibition. Of the observed visitors to *Weaving Splendor* 69% participated in activities, or viewed objects on display. 35% of visitors observed in the *Art Deco Creativity Studio* participated in activities or viewed objects on display.
 
-# Participant Demographics
-
-## Race/Ethnicity
+The majority of visitors spent 10 minutes or less in both versions of the *Creativity Studio*. Overall, visitors spent longer in the *Weaving Splendor Creativity Studio* than the *Art Deco Creativity Studio*. This may be due to the type of activities available in the *Weaving Splendor Creativity Studio*. These included embroidery, weaving, coloring, and an iPad with in-depth information along with two additional objects on view.
 
 ```{r}
-ad_race <- creativity_studio_all_instruments %>% 
-  pivot_longer(cols = with_which_racial_or_ethnic_group_s_do_you_identify_please_select_all_that_apply_selected_choice_african_american_or_black:with_which_racial_or_ethnic_group_s_do_you_identify_please_select_all_that_apply_selected_choice_native_hawaiian_or_other_pacific_islander,
-               names_to = "cs_race",
-               values_to = "cs_ethnicity") %>% 
-  select(response_id, cs_race, cs_ethnicity)%>% 
-  mutate(cs_race = str_remove(cs_race, "with_which_racial_or_ethic_group_s_do_you_identify_please_select_all_that_apply_selected_choice_")) %>% 
-  drop_na() %>% 
-  count(cs_ethnicity) %>% 
-  mutate(pct = n / sum(n)) %>% 
-  mutate(percent_display = percent(pct, accuracy = 1))
+ob_time2 <- tribble(
+  ~exhibition, ~minutes, ~percent,
+"Weaving Splendor", "5 or less", "51%",
+"Art Deco", "5 or less", "19%",
+"Weaving Splendor", "5 to 10", "22%",
+"Art Deco", "5 to 10", "30%",
+"Weaving Splendor", "10 to 20", "20%",
+"Art Deco", "10 to 20", "20%",
+"Weaving Splendor", "Around 30", "3%",
+"Art Deco", "Around 30", "14%")
+
 ```
 
-```{r}
-ggplot(data = ad_race,
-         mapping = aes(x =  reorder(cs_ethnicity, n),
-                       y = n,
-                       fill = cs_ethnicity)) +
-  geom_col(show.legend = FALSE,
-           position = "dodge") +
+```{r, results="hide"}
+ob_time_factor <- factor(ob_time2, levels = c("5 or less", "5 to 10", "10 to 20", "Around 30"))
+
+ggplot(data = ob_time2,
+         mapping = aes(x =  minutes,
+                       y = percent,
+                       fill = exhibition)) +
+  geom_col(stat = "ob_time_factor")+
   coord_flip() +
-  labs(title = "Race/Ethnicity of Visitors who attended<br>the Creativity Studio")+
+  scale_x_discrete(limits = c("Around 30", "10 to 20", "5 to 10", "5 or less")) +
+  labs(title = "Time Spent in both Creativity Studios")+
   theme(axis.title = element_blank(),
         panel.grid.minor.y = element_blank(),
-        panel.grid.major.y = element_line(colour = "lightgray")) +
-  theme(plot.title = element_markdown()) +
-  geom_text(data = ad_race,
-            inherit.aes = TRUE,
-            aes(label = percent_display),
-            hjust = -.2) +
-  scale_fill_brewer(palette = "RdPu") +
+        panel.grid.major.y = element_line(colour = "lightgray"),
+        axis.ticks.x = element_blank(),
+        axis.text.x = element_blank())+
+  theme(plot.title = element_markdown())+
+  annotate("text", x = 4, y = 8, label = "19%") +
+  annotate("text", x = 4, y = 3.3, label = "51%") +
+  annotate("text", x = 3, y = 2.8, label = "30%") +
+  annotate("text", x = 3, y = 8.2, label = "22%") +
+  annotate("text", x = 2, y = 1.8, label = "20%") +
+  annotate("text", x = 2, y = 4.3, label = "20%") +
+  annotate("text", x = 1, y = 2.4, label = "14%") +
+  annotate("text", x = 1, y = 5.5, label = "3%") +
+  scale_fill_brewer(palette = "OrRd") +
   scale_y_discrete(expand = expansion(add = c(.2,6.5)))
   theme_fivethirtyeight()
 ```
 
-## Age
+### What did visitors do in the studio?
+
+Maps of each *Creativity Studio* are displayed here. Each heat map shows where visit groups went in the exhibition. Red indicates a high number of visitors engaging in that activity. Yellow shows fewer visitors, and green and blue represent the least number of visitors engaging in an activity. 
+
+
+![Weaving Splendor Heat Map](images/Creativity%20Studio%20Weaving%20Splendor%20Heat%20Map.png)
+
+The most popular activity for *Weaving Splendor* were the embroidery table, followed closely by the loom. 
+
+
+![Art Deco Heat Map](images/AD%20CS%20Heat%20Map.jpg)
+
+The most popular activity for *Art Deco* was viewing the projection of the Kansas City skyline. Designing buildings with blocks, relaxing in the seating area, and reading text on the walls were the next most popular activities for *Art Deco*. 
+
+# *American Art Deco Creativity Studio* Survey and Interview Results
+
+All data in this section represents survey and interview results. Visitors were required to be 18 years old to participate in surveys and interviews. Results in this section have been further filtered to exclude anyone under the age of 18 who may have accidentally been included in our sample. Staff, volunteers, and visitors in tour groups were also ineligible to participate in surveys and interviews. 
+
+## Net Promoter Score
+
+Visitors were asked how likely they would be to recommend the Creativity Studio to friends or family. This question type is called the Net Promoter Score or NPS. This question allows us to know if visitors will be likely to encourage others to attend the studio or future iterations of the studio. 
+
+- A visitor who gives a rating of 9 or 10 is likely to be a "promoter" of the exhibition, or someone who is highly likely to recommend the experience to others. 
+    - Almost 60% of visitors to the space are considered promoters. 
+- Ratings of 7 or 8 are considered to be "passive", or more ambivalent about recommending the experience. 
+    - 33% of visitors fall into the "passive" category. 
+- Those who give a rating of 6 or below are considered "detractors". These visitors may not have enjoyed their experience or, more often, they feel that their friends or family will be unlikely to be interested. 
+    - 8% of visitors to the studio fell into the "detractor category". 
 
 ```{r}
-ad_age <- creativity_studio_all_instruments %>% 
-  select(response_id, what_is_your_age)%>% 
-     mutate(what_is_your_age = as.numeric(what_is_your_age)) %>% 
+NPS <- cssurvey %>% 
+  select(response_id, on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family)%>% 
   drop_na() %>% 
-  count(what_is_your_age)
+  count(on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family) %>% 
+  arrange(n) %>% 
+    mutate(pct = n / sum(n)) %>% 
+  mutate(percent_display = percent(pct, accuracy = 1))
 ```
 
 ```{r}
-ggplot(data = ad_age,
-       mapping = aes(x = what_is_your_age)) +
-  geom_histogram(bins = 10,
-                 show.legend = FALSE) +
-  labs(title = "Ages of Visitors who attended the Creativity Studio")+
+ggplot(data = NPS,
+         mapping = aes(x =  reorder(on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family, n),
+                       y = n,
+                       fill = on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family)) +
+  geom_col(show.legend = FALSE,
+           position = "dodge") +
+  scale_x_discrete(limits = c("4", "5", "6", "7", "8", "9", "10")) +
+  labs(title = "How likely would you be to recommend\nthe Creativity Studio to friends or family?") +
   theme(axis.title = element_blank(),
         panel.grid.minor.y = element_blank(),
         panel.grid.major.y = element_line(colour = "lightgray")) +
   theme(plot.title = element_markdown()) +
-  scale_fill_continuous() +
+  geom_text(data = NPS,
+            inherit.aes = TRUE,
+            aes(label = percent_display),
+            vjust = -.2) +
+  scale_fill_brewer(palette = "OrRd") +
   theme_fivethirtyeight()
 ```
 
+Statistical analysis was conducted to see if there were any connections between a visitor's Net Promoter Score and how they responded to other survey and interview questions. Throughout the next sections if anything of statistical significance was found it will be identified as "Findings". 
+
+## Activities
+
+```{r}
+activities <- cssurvey %>% 
+  pivot_longer(cols = what_did_you_and_your_group_do_in_the_creativity_studio_select_all_that_apply_selected_choice_i_or_someone_in_my_group_read_books_with_or_to_children:what_did_you_and_your_group_do_in_the_creativity_studio_select_all_that_apply_selected_choice_another_option_not_listed,
+               names_to = "what_did",
+               values_to = "did_what") %>% 
+  select(response_id, what_did, did_what)
+```
+
+```{r}
+activities <- activities %>% 
+  count(did_what) %>% 
+   mutate(pct = n / 251) %>% 
+  drop_na() %>% 
+  mutate(percent_display = percent(pct, accuracy = 1))
+```
+
+```{r, fig.width=10, fig.height=8}
+ggplot(data = activities,
+         mapping = aes(x =  reorder(did_what, n),
+                       y = n,
+                       fill = did_what)) +
+  geom_col(show.legend = FALSE)+
+ scale_x_discrete(labels = label_wrap(10)) +
+  scale_y_continuous(labels = comma) +
+  labs(title = "What did you and your group do in the Creativity Studio? Select all that apply.")+
+  theme(axis.title = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        panel.grid.major.y = element_line(colour = "lightgray")) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 0.5, vjust = 0.5)) +
+  geom_text(data = activities,
+            inherit.aes = TRUE,
+            aes(label = percent_display),
+            vjust = -.2)+
+   scale_fill_brewer(palette = "Set3") +
+  theme_fivethirtyeight(base_size = 12)
+```
+
+#### Findings
+
+Visitors who said they designed a building topper (a craft where visitors could color/design and attach items to cardboard that can then be folded into a rectangular building shape), were statistically more likely to rate the *Creativity Studio* a 10 out of 10.
+
 ## What brought you to the museum today?
+
+The majority of visitors who were surveyed leaving the *Creativity Studio* noted that they came to the museum specifically to see the *American Art Deco* exhibition. A much smaller percentage were drawn specifically by the attached *Creativity Studio*. 
 
 ```{r}
 attendance_reason <- cssurvey %>% 
@@ -217,12 +364,7 @@ ggplot(data = attendance_reason,
   theme_fivethirtyeight() 
 ```
 
-
-## Participant Demographics at a Glance
-
-- 15% of visitors came to the museum with the intention of visiting the *Creativity Studio*
-- 70% of visitors who attended the *American Art Deco* exhibition also visited the *Creativity Studio*
-```{r}
+```{r, include=FALSE}
 cssurvey %>% 
   select(response_id, did_you_plan_to_attend_the_creativity_studio_when_you_decided_to_come_to_the_museum_today)%>% 
   mutate(did_you_plan_to_attend_the_creativity_studio_when_you_decided_to_come_to_the_museum_today = str_remove(did_you_plan_to_attend_the_creativity_studio_when_you_decided_to_come_to_the_museum_today, "_the_creativity_studio_when_you_decided_to_come_to_the_museum_today")) %>% 
@@ -232,7 +374,7 @@ cssurvey %>%
   mutate(percent_display = percent(pct, accuracy = 1))
 ```
 
-```{r}
+```{r, include=FALSE}
 cssurvey %>% 
   select(response_id, did_visitor_agree_to_take_the_survey_selected_choice)%>% 
   drop_na() %>% 
@@ -241,14 +383,14 @@ cssurvey %>%
   mutate(percent_display = percent(pct, accuracy = 1))
 ```
 
-```{r}
+```{r, include=FALSE}
 cssurvey %>% 
   select(response_id, did_visitor_agree_to_take_the_survey_no_provide_reason_given_text)%>% 
   drop_na() %>% 
   count(did_visitor_agree_to_take_the_survey_no_provide_reason_given_text)
 ```
 
-```{r}
+```{r, include=FALSE}
 cssurvey %>% 
   select(response_id, did_you_attend_the_creativity_studio_today)%>% 
   drop_na() %>% 
@@ -257,7 +399,7 @@ cssurvey %>%
   mutate(percent_display = percent(pct, accuracy = 1))
 ```
 
-```{r}
+```{r, include=FALSE}
 cssurvey %>% 
   pivot_longer(cols = how_did_you_hear_about_the_creativity_studio_select_all_that_apply_selected_choice_signs_at_the_museum:how_did_you_hear_about_the_creativity_studio_select_all_that_apply_selected_choice_word_of_mouth_friends_family,
                names_to = "how_heard",
@@ -268,278 +410,124 @@ cssurvey %>%
   count(way_heard)
 ```
 
-## Activities
-
-```{r}
-activities <- cssurvey %>% 
-  pivot_longer(cols = what_did_you_and_your_group_do_in_the_creativity_studio_select_all_that_apply_selected_choice_i_or_someone_in_my_group_read_books_with_or_to_children:what_did_you_and_your_group_do_in_the_creativity_studio_select_all_that_apply_selected_choice_another_option_not_listed,
-               names_to = "what_did",
-               values_to = "did_what") %>% 
-  select(response_id, what_did, did_what) %>% 
-    count(did_what) %>% 
-  mutate(pct = n / sum(n)) %>% 
-  drop_na() %>% 
-  mutate(percent_display = percent(pct, accuracy = 1))
-```
-
-```{r}
-ggplot(data = activities,
-         mapping = aes(x =  reorder(did_what, n),
-                       y = n,
-                       fill = did_what)) +
-  geom_col(show.legend = FALSE,
-           position = "dodge")+
-  coord_flip() +
-  labs(title = "What did you and your group do in the Creativity Studio? Select all that apply.")+
-  theme(axis.title = element_blank(),
-        panel.grid.minor.y = element_blank(),
-        panel.grid.major.y = element_line(colour = "lightgray")) +
-  theme(plot.title = element_markdown()) +
-  geom_text(data = activities,
-            inherit.aes = TRUE,
-            aes(label = percent_display),
-            vjust = -.2)+
-  theme_fivethirtyeight()
-```
-
-
-```{r}
+```{r, include=FALSE}
 cssurvey %>% 
   select(response_id, what_did_you_and_your_group_do_in_the_creativity_studio_select_all_that_apply_another_option_not_listed_text)%>% 
   drop_na() %>% 
   count(what_did_you_and_your_group_do_in_the_creativity_studio_select_all_that_apply_another_option_not_listed_text)
 ```
 
-```{r}
-NPS <- cssurvey %>% 
-  select(response_id, on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family)%>% 
-  drop_na() %>% 
-  count(on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family) %>% 
-  arrange(n) %>% 
-    mutate(pct = n / sum(n)) %>% 
-  mutate(percent_display = percent(pct, accuracy = 1))
-```
-
-```{r}
-ggplot(data = NPS,
-         mapping = aes(x =  reorder(on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family, n),
-                       y = n,
-                       fill = on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family)) +
-  geom_col(show.legend = FALSE,
-           position = "dodge") +
-  labs(title = "How likely would you be to recommend\nthe Creativity Studio to friends or family?") +
-  theme(axis.title = element_blank(),
-        panel.grid.minor.y = element_blank(),
-        panel.grid.major.y = element_line(colour = "lightgray")) +
-  theme(plot.title = element_markdown()) +
-  geom_text(data = NPS,
-            inherit.aes = TRUE,
-            aes(label = percent_display),
-            vjust = -.2) +
-  scale_fill_brewer(palette = "Blues") +
-  theme_wsj()
-```
-
-
-```{r}
+```{r, include=FALSE}
 cssurvey %>% 
   select(response_id, please_say_a_few_words_explaining_why_you_gave_it_that_rating_in_the_space_below)%>% 
   drop_na() %>% 
   count(please_say_a_few_words_explaining_why_you_gave_it_that_rating_in_the_space_below)
 ```
 
+### Agreement Questions
+
+Visitors to the studio were presented with a series of questions and asked to rate their agreement with each statement. Answer choices were: Strongly Disagree, Disagree, Neither Agree nor Disagree, Agree, and Strongly Agree. For each question asked the majority of visitors said they either agreed or strongly agreed. The percent of agree/strongly agree are included here. Full charts can be seen in the Appendix at the end of this report. 
+
+- The *Creativity Studio* inspired me or made me excited to be creative: 83%
+- I felt a sense of connection to the Kansas City community while in the *Creativity Studio*: 68%
+- I felt relaxed in the *Creativity Studio* space: 92%
+- The *Creativity Studio* gave me a space to be social with my group: 75%
+- The *Creativity Studio* gave me a space to interact with people outside of my group: 50%
+- I saw connections between the *Art Deco* exhibition and the activities available in the *Creativity Studio*: 97%
+
+#### Findings
+
+Visitors who said they Strongly Agreed that there was a connection between the *Art Deco* exhibition the *Creativity Studio* were more likely to rate the *Creativity Studio* a 10 out of 10. Visitors who rated the exhibition a 7 out of 10 were more likely to say they Agreed that the *Creativity Studio* inspired or made them excited to be creative. 
+
+# Participant Demographics
+
+The following portion of this report describes the demographic data that was collected about visitors using surveys and interviews. There were no statistically significant findings when comparing demographic data to NPS or satisfaction data with the exception of membership data. Data in this section was further compared to COVES data collected during the run of the *American Art Deco* special exhibition. Comparisons are included in each section below. 
+
+## Race/Ethnicity
+
 ```{r}
-inspired <- cssurvey %>% 
-  select(response_id, please_rate_your_agreement_with_the_following_statements_the_creativity_studio_inspired_me_or_made_me_excited_to_be_creative)%>% 
+ad_race <- creativity_studio_all_instruments %>% 
+  pivot_longer(cols = with_which_racial_or_ethnic_group_s_do_you_identify_please_select_all_that_apply_selected_choice_african_american_or_black:with_which_racial_or_ethnic_group_s_do_you_identify_please_select_all_that_apply_selected_choice_native_hawaiian_or_other_pacific_islander,
+               names_to = "cs_race",
+               values_to = "cs_ethnicity") %>% 
+  select(response_id, cs_race, cs_ethnicity)%>% 
+  mutate(cs_race = str_remove(cs_race, "with_which_racial_or_ethic_group_s_do_you_identify_please_select_all_that_apply_selected_choice_")) %>% 
   drop_na() %>% 
-  count(please_rate_your_agreement_with_the_following_statements_the_creativity_studio_inspired_me_or_made_me_excited_to_be_creative) %>% 
-  arrange(n) %>% 
+  count(cs_ethnicity) %>% 
   mutate(pct = n / sum(n)) %>% 
   mutate(percent_display = percent(pct, accuracy = 1))
 ```
 
-```{r}
-ggplot(data = inspired,
-         mapping = aes(x = reorder(please_rate_your_agreement_with_the_following_statements_the_creativity_studio_inspired_me_or_made_me_excited_to_be_creative, n),
+```{r, results="hide"}
+ggplot(data = ad_race,
+         mapping = aes(x =  reorder(cs_ethnicity, n),
                        y = n,
-                       fill = please_rate_your_agreement_with_the_following_statements_the_creativity_studio_inspired_me_or_made_me_excited_to_be_creative)) +
+                       fill = cs_ethnicity)) +
   geom_col(show.legend = FALSE,
            position = "dodge") +
   coord_flip() +
-   labs(title = "The Creativity Studio inspired me\nor made me excited to be creative.") +
+  labs(title = "Race/Ethnicity of Visitors who attended<br>the Creativity Studio")+
   theme(axis.title = element_blank(),
         panel.grid.minor.y = element_blank(),
         panel.grid.major.y = element_line(colour = "lightgray")) +
   theme(plot.title = element_markdown()) +
-  geom_text(data = inspired,
+  geom_text(data = ad_race,
             inherit.aes = TRUE,
             aes(label = percent_display),
             hjust = -.2) +
-  scale_fill_brewer(palette = "Blues") +
-  scale_fill_brewer(palette = "GnBu") +
-  theme_fivethirtyeight()
-```
-
-
-```{r}
-community <- cssurvey %>% 
-  select(response_id, please_rate_your_agreement_with_the_following_statements_i_felt_a_sense_of_connection_to_the_kansas_city_community_while_in_the_creativity_studio)%>% 
-  drop_na() %>% 
-  count(please_rate_your_agreement_with_the_following_statements_i_felt_a_sense_of_connection_to_the_kansas_city_community_while_in_the_creativity_studio) %>% 
-  arrange() %>% 
-  mutate(pct = n / sum(n)) %>% 
-  mutate(percent_display = percent(pct, accuracy = 1))
-```
-
-```{r}
-ggplot(data = community,
-         mapping = aes(x = reorder(please_rate_your_agreement_with_the_following_statements_i_felt_a_sense_of_connection_to_the_kansas_city_community_while_in_the_creativity_studio, n),
-                       y = n,
-                       fill = please_rate_your_agreement_with_the_following_statements_i_felt_a_sense_of_connection_to_the_kansas_city_community_while_in_the_creativity_studio)) +
-  geom_col(show.legend = FALSE,
-           position = "dodge") +
-   coord_flip() +
-   labs(title = "I felt a sense of connection to the\nKansas City community while in the Creativity Studio") +
-  theme(axis.title = element_blank(),
-        panel.grid.minor.y = element_blank(),
-        panel.grid.major.y = element_line(colour = "lightgray")) +
-  theme(plot.title = element_markdown()) +
-  geom_text(data = community,
-            inherit.aes = TRUE,
-            aes(label = percent_display),
-            hjust = -.2) +
-  scale_fill_brewer(palette = "Blues") +
-  scale_fill_brewer(palette = "Greens") +
-  theme_fivethirtyeight()
-```
-
-
-```{r}
-relaxed <- cssurvey %>% 
-  select(response_id, please_rate_your_agreement_with_the_following_statements_i_felt_relaxed_in_the_creativity_studio_space)%>% 
-  drop_na() %>% 
-  count(please_rate_your_agreement_with_the_following_statements_i_felt_relaxed_in_the_creativity_studio_space) %>% 
-  mutate(pct = n / sum(n)) %>% 
-  mutate(percent_display = percent(pct, accuracy = 1))
-```
-
-```{r}
-ggplot(data = relaxed,
-         mapping = aes(x = reorder(please_rate_your_agreement_with_the_following_statements_i_felt_relaxed_in_the_creativity_studio_space, n),
-                       y = n,
-                       fill = please_rate_your_agreement_with_the_following_statements_i_felt_relaxed_in_the_creativity_studio_space)) +
-  geom_col(show.legend = FALSE,
-           position = "dodge") +
-  coord_flip() +
-   labs(title = "I felt relaxed in the Creativity Studio space.") +
-  theme(axis.title = element_blank(),
-        panel.grid.minor.y = element_blank(),
-        panel.grid.major.y = element_line(colour = "lightgray")) +
-  theme(plot.title = element_markdown()) +
-  geom_text(data = relaxed,
-            inherit.aes = TRUE,
-            aes(label = percent_display),
-            hjust = -.2) +
-  scale_fill_brewer(palette = "Blues") +
-  scale_fill_brewer(palette = "Oranges") +
-  theme_fivethirtyeight()
-```
-
-
-```{r}
-social <- cssurvey %>% 
-  select(response_id, please_rate_your_agreement_with_the_following_statements_the_creativity_studio_gave_me_a_space_to_be_social_with_my_group)%>% 
-  drop_na() %>% 
-  count(please_rate_your_agreement_with_the_following_statements_the_creativity_studio_gave_me_a_space_to_be_social_with_my_group) %>% 
-  mutate(pct = n / sum(n)) %>% 
-  mutate(percent_display = percent(pct, accuracy = 1))
-```
-
-```{r}
-ggplot(data = social,
-         mapping = aes(x = reorder(please_rate_your_agreement_with_the_following_statements_the_creativity_studio_gave_me_a_space_to_be_social_with_my_group, n),
-                       y = n,
-                       fill = please_rate_your_agreement_with_the_following_statements_the_creativity_studio_gave_me_a_space_to_be_social_with_my_group)) +
-  geom_col(show.legend = FALSE,
-           position = "dodge") +
-  coord_flip() +
-   labs(title = "The Creativity Studio gave me a space\nto be social with my group.") +
-  theme(axis.title = element_blank(),
-        panel.grid.minor.y = element_blank(),
-        panel.grid.major.y = element_line(colour = "lightgray")) +
-  theme(plot.title = element_markdown()) +
-  geom_text(data = social,
-            inherit.aes = TRUE,
-            aes(label = percent_display),
-            hjust = -.2) +
-  scale_fill_brewer(palette = "Blues") +
   scale_fill_brewer(palette = "OrRd") +
+  scale_y_discrete(expand = expansion(add = c(.2,6.5)))
   theme_fivethirtyeight()
 ```
 
+When comparing visitors to the *Art Deco Creativity Studio* to general visitors captured by COVES who attended during the run of *American Art Deco* we found some differences in race/ethnicity. Visitors who are White represent the largest group of visitors in both general visitors and the *Creativity Studio*. However, general visitors show a smaller percentage of White visitors (68%) than attended the *Creativity Studio* (80%). More Asian or Asian American visitors attended the *Creativity Studio* (7%), than were general visitors (4%). The percentage of African American or Black visitors was the same across both general visitors and the *Creativity Studio* (5%). Hispanic or Latinx (4%), and Native American or Alaska Native (2%) were both fewer than general visitors (9%, and 5% respectively). Native Hawaiian or other Pacific Islander was not a category measured by COVES data and therefore cannot be compared. 
+
+## Age
 
 ```{r}
-interact <- cssurvey %>% 
-  select(response_id, please_rate_your_agreement_with_the_following_statements_the_creativity_studio_gave_me_a_space_to_interact_with_people_outside_of_my_group)%>% 
+ad_age <- creativity_studio_all_instruments %>% 
+  select(response_id, what_is_your_age)%>% 
+     mutate(what_is_your_age = as.numeric(what_is_your_age)) %>% 
   drop_na() %>% 
-  count(please_rate_your_agreement_with_the_following_statements_the_creativity_studio_gave_me_a_space_to_interact_with_people_outside_of_my_group) %>% 
-  mutate(pct = n / sum(n)) %>% 
-  mutate(percent_display = percent(pct, accuracy = 1))
+  count(what_is_your_age)
 ```
 
 ```{r}
-ggplot(data = interact,
-         mapping = aes(x = reorder(please_rate_your_agreement_with_the_following_statements_the_creativity_studio_gave_me_a_space_to_interact_with_people_outside_of_my_group, n),
-                       y = n,
-                       fill = please_rate_your_agreement_with_the_following_statements_the_creativity_studio_gave_me_a_space_to_interact_with_people_outside_of_my_group)) +
-  geom_col(show.legend = FALSE,
-           position = "dodge") +
-  coord_flip() +
-   labs(title = "The Creativity Studio gave me a space\nto interact with people outside of my group.") +
+ggplot(data = covesage,
+       mapping = aes(x = age)) +
+  geom_histogram(bins = 6, fill = "orange",
+                 show.legend = FALSE) +
+  labs(title = "Ages of General Visitors")+
   theme(axis.title = element_blank(),
         panel.grid.minor.y = element_blank(),
         panel.grid.major.y = element_line(colour = "lightgray")) +
   theme(plot.title = element_markdown()) +
-  geom_text(data = interact,
-            inherit.aes = TRUE,
-            aes(label = percent_display),
-            hjust = -.2) +
-  scale_fill_brewer(palette = "Blues") +
-  scale_fill_brewer(palette = "PuBu") +
+  scale_fill_fermenter (palette = "OrRd") +
   theme_fivethirtyeight()
 ```
 
-
-```{r}
-art_deco_connection <- cssurvey %>% 
-  select(response_id, please_rate_your_agreement_with_the_following_statements_i_saw_connections_between_the_art_deco_exhibition_and_the_activities_available_in_the_creativity_studio)%>% 
-  drop_na() %>% 
-  count(please_rate_your_agreement_with_the_following_statements_i_saw_connections_between_the_art_deco_exhibition_and_the_activities_available_in_the_creativity_studio) %>% mutate(pct = n / sum(n)) %>% 
-  mutate(percent_display = percent(pct, accuracy = 1))
+```{r, include=FALSE}
+ad_age %>% 
+  summarise(mean_age = mean(what_is_your_age),
+            .groups = 'drop')
 ```
+When comparing visitors to the *Art Deco Creativity Studio* to general visitors captured by COVES who attended during the run of *American Art Deco* we found some differences in age. General visitors show a peak around the ages of 30-40, and again around age 60. Visitors to the *Creativity Studio* also show a peak around age 30, but show a downward decline from there. This tells us that more young adults are attracted to the *Creativity Studio* than older adults. We can see this reflected in the average age of both groups. *Creativity Studio* visitors are slightly younger with an average age of 41 years old. General visitors during the same time period show an average age of 44.
 
 ```{r}
-ggplot(data = art_deco_connection,
-         mapping = aes(x =  reorder(please_rate_your_agreement_with_the_following_statements_i_saw_connections_between_the_art_deco_exhibition_and_the_activities_available_in_the_creativity_studio, n),
-                       y = n,
-                       fill = please_rate_your_agreement_with_the_following_statements_i_saw_connections_between_the_art_deco_exhibition_and_the_activities_available_in_the_creativity_studio)) +
-  geom_col(show.legend = FALSE,
-           position = "dodge") +
-  coord_flip() +
-   labs(title = "I saw connections between the Art Deco exhibition\nand the activities available in the Creativity Studio.") +
+ggplot(data = ad_age,
+       mapping = aes(x = what_is_your_age)) +
+  geom_histogram(bins = 6, fill = "red",
+                 show.legend = FALSE) +
+  labs(title = "Ages of Visitors who attended the Creativity Studio")+
   theme(axis.title = element_blank(),
         panel.grid.minor.y = element_blank(),
         panel.grid.major.y = element_line(colour = "lightgray")) +
   theme(plot.title = element_markdown()) +
-  geom_text(data = art_deco_connection,
-            inherit.aes = TRUE,
-            aes(label = percent_display),
-            hjust = -.2) +
-  scale_fill_brewer(palette = "Blues") +
-  scale_fill_brewer(palette = "PuBuGn") +
+  scale_fill_fermenter (palette = "OrRd") +
   theme_fivethirtyeight()
 ```
 
+## Membership
 
 ```{r}
 member <- creativity_studio_all_instruments %>% 
@@ -550,7 +538,7 @@ member <- creativity_studio_all_instruments %>%
   mutate(percent_display = percent(pct, accuracy = 1))
 ```
 
-```{r}
+```{r, fig.width=10}
 ggplot(data = member,
          mapping = aes(x =  reorder(are_you_currently_a_member_of_the_nelson_atkins_museum_of_art, n),
                        y = n,
@@ -566,11 +554,17 @@ ggplot(data = member,
             inherit.aes = TRUE,
             aes(label = percent_display),
             vjust = -.2) +
-  scale_fill_brewer(palette = "Blues") +
-  scale_fill_brewer(palette = "Blues") +
-  theme_wsj()
+  scale_fill_brewer(palette = "OrRd") +
+  theme_fivethirtyeight()
 ```
 
+When comparing visitors to the *Art Deco Creativity Studio* to general visitors captured by COVES who attended during the run of *American Art Deco* we found some differences in membership. General visitors were half as likely to be a museum member. This is likely due to the ticketed nature of the *Art Deco* exhibition. Members are able to attend ticketed exhibitions for free as part of their member benefits. 
+
+#### Findings
+
+Statistical analysis was conducted to see if there were any connections between a visitor's Net Promoter Score and how the responded to other survey and interview questions. Visitor who said they were a member, were more likely to rate the *Creativity Studio* an 8 out of 10.
+
+## Visit History
 
 ```{r}
 v_history <- creativity_studio_all_instruments %>% 
@@ -580,7 +574,7 @@ v_history <- creativity_studio_all_instruments %>%
   mutate(percent_display = percent(pct, accuracy = 1))
 ```
 
-```{r}
+```{r, fig.width=12}
 ggplot(data = v_history,
          mapping = aes(x =  reorder(in_the_past_12_months_how_many_times_have_you_visited_the_nelson_atkins_museum_of_art, n),
                        y = n,
@@ -588,7 +582,8 @@ ggplot(data = v_history,
   geom_col(show.legend = FALSE,
            position = "dodge") +
   coord_flip() +
-   labs(title = "How many times have you visited\nThe Nelson-Atkins Museum of Art in the past 12 months?") +
+  scale_x_discrete(limits = c("Over 5 times", "3-5 times", "1-2 times", "Today is my first visit", "I've visited before, but not in the past 12 months")) +  
+  labs(title = "How many times have you visited\nThe Nelson-Atkins Museum of Art in the past 12 months?") +
   theme(axis.title = element_blank(),
         panel.grid.minor.y = element_blank(),
         panel.grid.major.y = element_line(colour = "lightgray")) +
@@ -597,12 +592,13 @@ ggplot(data = v_history,
             inherit.aes = TRUE,
             aes(label = percent_display),
             hjust = -.2) +
-  scale_fill_brewer(palette = "Blues") +
-  scale_fill_brewer(palette = "Purples") +
+  scale_fill_brewer(palette = "OrRd") +
   theme_fivethirtyeight()
 ```
 
+When comparing visitors to the *Art Deco Creativity Studio* to general visitors captured by COVES we find that there were similar numbers of general visitors for those who have visited 1-2 times, and Over 5 times in the past twelve months. There were half as many first time visitors, and visitors who have attended 3-5 times to the *Creativity Studio*, than general visitors. There were no visitors to the *Creativity Studio* who said they haven't visited in over 12 months. During the same time frame 33% of general visitors had not visited in over 12 months.
 
+## Education
 
 ```{r}
 education <- creativity_studio_all_instruments %>% 
@@ -635,6 +631,9 @@ ggplot(data = education,
   theme_fivethirtyeight()
 ```
 
+When comparing visitors to the *Art Deco Creativity Studio* to general visitors captured by COVES who attended during the run of *American Art Deco* we found some differences in education level. There were similar levels of visitors with an Associate degree, and a Bachelor's degree. There were more visitors to the *Creativity Studio* who have a Master's degree, or some college/vocational program. There were more general visitors who have a degree beyond a Master's degree. 
+
+## Visit Group
 
 ```{r}
 vgroup <- creativity_studio_all_instruments %>% 
@@ -666,11 +665,17 @@ ggplot(data = vgroup,
             inherit.aes = TRUE,
             aes(label = percent_display),
             hjust = -.2) +
-  scale_fill_brewer(palette = "Blues") +
-  scale_fill_brewer(palette = "YlGn") +
+    scale_fill_brewer(palette = "OrRd") +
   theme_fivethirtyeight()
 ```
 
+Making comparisons between *Art Deco Creativity Studio* visitors and general visitors captured by COVES is difficult due to the way the question is framed in the COVES survey. However, we are able to compare groups who attended with children under 18. For the *Creativity Studio* 26% of visitors were in a group with children, compared to 11% of general visitors. 
+
+#### Findings
+
+From the differences in visitors attending with children we can conclude that the *Creativity Studio* attracted more visitors with children. 
+
+## Language
 
 ```{r}
 language <- creativity_studio_all_instruments %>% 
@@ -685,7 +690,7 @@ language <- creativity_studio_all_instruments %>%
   mutate(percent_display = percent(pct, accuracy = 1))
 ```
 
-```{r}
+```{r, fig.width=10}
 ggplot(data = language,
          mapping = aes(x =  reorder(language_spoken, n),
                        y = n,
@@ -702,156 +707,393 @@ ggplot(data = language,
             inherit.aes = TRUE,
             aes(label = percent_display),
             hjust = -.2) +
-  scale_fill_brewer(palette = "Blues") +
-  scale_fill_brewer(palette = "YlGnBu") +
+    scale_fill_brewer(palette = "OrRd") +
   theme_fivethirtyeight()
 ```
 
+When comparing visitors to the *Art Deco Creativity Studio* to general visitors captured by COVES who attended during the run of *American Art Deco* we found some differences in reported languages spoken at home. Visitors to the *Creativity Studio* were less likely to speak English only (78%) compared to general visitors (97%). 
 
-```{r}
+```{r, include=FALSE}
 cssurvey %>% 
   select(response_id, what_is_your_zip_code)%>% 
   drop_na() %>% 
   count(what_is_your_zip_code)
 ```
 
-```{r}
+```{r, include=FALSE}
 cssurvey %>% 
   select(response_id, please_let_us_know_if_you_have_any_additional_thoughts_or_comments)%>% 
   drop_na() %>% 
   count(please_let_us_know_if_you_have_any_additional_thoughts_or_comments)
 ```
 
-```{r}
+```{r, include=FALSE}
 cssurvey %>% 
   group_by(on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family, what_did_you_and_your_group_do_in_the_creativity_studio_select_all_that_apply_selected_choice_i_or_someone_in_my_group_read_books_available_including_adults_and_children_in_your_group_reading_on_their_own) %>% 
   tally() %>% 
   spread(on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family, n)
 ```
 
-```{r}
+```{r, include=FALSE}
 cssurvey %>% 
   group_by(on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family, what_did_you_and_your_group_do_in_the_creativity_studio_select_all_that_apply_selected_choice_another_option_not_listed) %>% 
   tally() %>% 
   spread(on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family, n)
 ```
 
-```{r}
+```{r, include=FALSE}
 cssurvey %>% 
   group_by(on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family, what_did_you_and_your_group_do_in_the_creativity_studio_select_all_that_apply_selected_choice_answered_questions_or_asked_others_in_my_group_to_answer_questions_written_on_the_walls) %>% 
   tally() %>% 
   spread(on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family, n)
 ```
 
-```{r}
+```{r, include=FALSE}
 cssurvey %>% 
   group_by(on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family, what_did_you_and_your_group_do_in_the_creativity_studio_select_all_that_apply_selected_choice_designed_a_building_with_blocks) %>% 
   tally() %>% 
   spread(on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family, n)
 ```
 
-```{r}
+```{r, include=FALSE}
 cssurvey %>% 
   group_by(on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family, what_did_you_and_your_group_do_in_the_creativity_studio_select_all_that_apply_selected_choice_designed_my_own_building_topper) %>% 
   tally() %>% 
   spread(on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family, n)
 ```
 
-```{r}
+```{r, include=FALSE}
 cssurvey %>% 
   group_by(on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family, what_did_you_and_your_group_do_in_the_creativity_studio_select_all_that_apply_selected_choice_i_or_someone_in_my_group_had_a_conversation_with_someone_outside_of_our_group_including_other_visitors_or_staff) %>% 
   tally() %>% 
   spread(on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family, n)
 ```
 
-```{r}
+```{r, include=FALSE}
 cssurvey %>% 
   group_by(on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family, what_did_you_and_your_group_do_in_the_creativity_studio_select_all_that_apply_selected_choice_i_or_someone_in_my_group_read_books_available_including_adults_and_children_in_your_group_reading_on_their_own) %>% 
   tally() %>% 
   spread(on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family, n)
 ```
 
-```{r}
+```{r, include=FALSE}
 cssurvey %>% 
   group_by(on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family, what_did_you_and_your_group_do_in_the_creativity_studio_select_all_that_apply_selected_choice_i_or_someone_in_my_group_read_books_with_or_to_children) %>% 
   tally() %>% 
   spread(on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family, n)
 ```
 
-```{r}
+```{r, include=FALSE}
 cssurvey %>% 
   group_by(on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family, what_did_you_and_your_group_do_in_the_creativity_studio_select_all_that_apply_selected_choice_i_or_someone_in_my_group_had_a_conversation_with_someone_outside_of_our_group_including_other_visitors_or_staff) %>% 
   tally() %>% 
   spread(on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family, n)
 ```
 
-```{r}
+```{r, include=FALSE}
 cssurvey %>% 
   group_by(on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family, what_did_you_and_your_group_do_in_the_creativity_studio_select_all_that_apply_selected_choice_i_or_someone_in_my_group_shared_something_to_social_media_or_are_planning_to) %>% 
   tally() %>% 
   spread(on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family, n)
 ```
 
-```{r}
+```{r, include=FALSE}
 cssurvey %>% 
   group_by(on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family, what_did_you_and_your_group_do_in_the_creativity_studio_select_all_that_apply_selected_choice_looked_at_pictures_of_the_kansas_city_skyline_projected_on_the_wall) %>% 
   tally() %>% 
   spread(on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family, n)
 ```
 
-```{r}
+```{r, include=FALSE}
 cssurvey %>% 
   group_by(on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family, what_did_you_and_your_group_do_in_the_creativity_studio_select_all_that_apply_selected_choice_answered_questions_or_asked_others_in_my_group_to_answer_questions_written_on_the_walls) %>% 
   tally() %>% 
   spread(on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family, n)
 ```
 
-```{r}
+```{r, include=FALSE}
 cssurvey %>% 
   group_by(on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family, what_did_you_and_your_group_do_in_the_creativity_studio_select_all_that_apply_selected_choice_took_a_break_in_seating_area) %>% 
   tally() %>% 
   spread(on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family, n)
 ```
 
-```{r}
+```{r, include=FALSE}
 cssurvey %>% 
   group_by(on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family, please_rate_your_agreement_with_the_following_statements_the_creativity_studio_inspired_me_or_made_me_excited_to_be_creative) %>% 
   tally() %>% 
   spread(on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family, n)
 ```
 
-```{r}
+```{r, include=FALSE}
 cssurvey %>% 
   group_by(on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family, please_rate_your_agreement_with_the_following_statements_the_creativity_studio_gave_me_a_space_to_interact_with_people_outside_of_my_group) %>% 
   tally() %>% 
   spread(on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family, n)
 ```
 
-```{r}
+```{r, include=FALSE}
 cssurvey %>% 
   group_by(on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family, please_rate_your_agreement_with_the_following_statements_the_creativity_studio_gave_me_a_space_to_be_social_with_my_group) %>% 
   tally() %>% 
   spread(on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family, n)
 ```
 
-```{r}
+```{r, include=FALSE}
 cssurvey %>% 
   group_by(on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family, please_rate_your_agreement_with_the_following_statements_i_saw_connections_between_the_art_deco_exhibition_and_the_activities_available_in_the_creativity_studio) %>% 
   tally() %>% 
   spread(on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family, n)
 ```
 
-```{r}
+```{r, include=FALSE}
 cssurvey %>% 
   group_by(on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family, please_rate_your_agreement_with_the_following_statements_i_felt_relaxed_in_the_creativity_studio_space) %>% 
   tally() %>% 
   spread(on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family, n)
 ```
 
-```{r}
+```{r, include=FALSE}
 cssurvey %>% 
   group_by(on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family, please_rate_your_agreement_with_the_following_statements_i_felt_a_sense_of_connection_to_the_kansas_city_community_while_in_the_creativity_studio) %>% 
   tally() %>% 
   spread(on_a_scale_of_1_to_10_where_1_is_the_lowest_and_10_is_the_highest_how_likely_would_you_be_to_recommend_the_creativity_studio_to_friends_or_family, n)
 ```
 
+# Findings
+
+Looking across both versions of the *Creativity Studio* there are some items that draw our attention. 
+
+1. Visitors were overwhelmingly satisfied and likely to recommend both of the *Creativity Studios* to others. This is evidenced by the 100% NPS ratings for both versions and the 100% excellent and outstanding ratings given for both studios. 
+2. One goal when creating the concept of the *Creativity Studio* was to attract more Social Art-Goers, and Personal-Impact Creatives to the museum. When looking at the COVES data we can see that this was overall successful, although with varying degrees of success for each studio. The *Art Deco Creativity Studio* showed a huge increase in Social Art-Goers. 13% for general audiences to 38% for the *Art Deco Creativity Studio*. However, we don't see any increase in this group for the *Weaving Splendor Creativity Studio*. For Personal-Impact Creatives we see almost the opposite although not on as grand of a scale. 9% of general audiences identify as a Personal-Impact Creative, which increases to 15% for the *Weaving Splendor Creativity Studio*, and drops dramatically to 0% for the *Art Deco Creativity Studio*. We also see an unexpected increase in Low-Pressure Connectors for both *Art Deco* and the *Art Deco Creativity Studio*. 6% of general visitors identify as Low-Pressure Connectors, with an increse to 13% for the *Art Deco Creativity Studio*. This invites the question -- what is it about *Weaving Splendor* that attracted so many more Personal Impact Creatives, and what is it about *Art Deco* that attracted such a high number of Social Art-Goers and Low-Pressure Connectors? 
+3. Visitor interviews indicate that many people expressed a belief that the *Creativity Studio* was for children. However, the majority of participants to both were adults. Although there was an increase in children represented in the *Art Deco Creativity Studio* from general visitors. There was also an increase in the amount of children represented using the *Creativity Studio* from the *Weaving Splendor* version to the *Art Deco* version. This may be due to the technical skills or fine motor skills required to weave and embroider versus the gross motor skills needed for stacking blocks. We also found that more visitors walked straight through the *Art Deco Creativity Studio* than the *Weaving Splendor Creativity Studio*. This may be due to the same factors and a perception of skill needed to participate. Do higher skill activities attract a larger adult audience? Similarly hands-on activities were the most popular in the *Weaving  Splendor Creativity Studio* as opposed to hands-off activities that were more popular in the *Art Deco Creativity Studio*. 
+4. There were no differences in satisfaction among demographic variables. 
+
+# Recommendations
+
+# Appendix
+
+```{r}
+ws_activity <- tribble(
+  ~Activity, ~Percents,
+  "Viewed Robe", "24%",
+  "Viewed Jeans", "26%",
+  "Read Wall Panel", "17%",
+  "iPad", "10%",
+  "Embroidery", "44%",
+  "Drawing", "28%",
+  "Loom", "41%",
+)
+```
+
+```{r, results="hide"}
+ggplot(data = ws_activity,
+         mapping = aes(x =  reorder(Activity, Percents),
+                       y = Percents,
+                       fill = Activity)) +
+  geom_col()+
+  coord_flip() +
+  labs(title = "Activities in Weaving Splendor Creativity Studio")+
+  theme(axis.title = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        panel.grid.major.y = element_line(colour = "lightgray"),
+        axis.ticks.x = element_blank(),
+        axis.text.x = element_blank())+
+    geom_text(data = ws_activity,
+            inherit.aes = TRUE,
+            aes(label = Percents),
+            hjust = -.2) +
+  theme(plot.title = element_markdown())+
+  scale_fill_brewer(palette = "OrRd") +
+  scale_y_discrete(expand = expansion(add = c(.2,6.5)))
+  theme_fivethirtyeight()
+```
+
+```{r}
+inspired <- cssurvey %>% 
+  select(response_id, please_rate_your_agreement_with_the_following_statements_the_creativity_studio_inspired_me_or_made_me_excited_to_be_creative)%>% 
+  drop_na() %>% 
+  count(please_rate_your_agreement_with_the_following_statements_the_creativity_studio_inspired_me_or_made_me_excited_to_be_creative) %>% 
+  arrange(n) %>% 
+  mutate(pct = n / sum(n)) %>% 
+  mutate(percent_display = percent(pct, accuracy = 1))
+```
+
+```{r, fig.width=10}
+ggplot(data = inspired,
+         mapping = aes(x = reorder(please_rate_your_agreement_with_the_following_statements_the_creativity_studio_inspired_me_or_made_me_excited_to_be_creative, n),
+                       y = n,
+                       fill = please_rate_your_agreement_with_the_following_statements_the_creativity_studio_inspired_me_or_made_me_excited_to_be_creative)) +
+  geom_col(show.legend = FALSE,
+           position = "dodge") +
+  coord_flip() +
+  scale_x_discrete(limits = c("Strongly Disagree", "Disagree", "Neither Agree nor Disagree", "Agree", "Strongly Agree")) + 
+  labs(title = "The Creativity Studio inspired me\nor made me excited to be creative.") +
+  theme(axis.title = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        panel.grid.major.y = element_line(colour = "lightgray")) +
+  theme(plot.title = element_markdown()) +
+  geom_text(data = inspired,
+            inherit.aes = TRUE,
+            aes(label = percent_display),
+            hjust = -.2) +
+  scale_fill_brewer(palette = "OrRd") +
+  theme_fivethirtyeight()
+```
+
+```{r}
+community <- cssurvey %>% 
+  select(response_id, please_rate_your_agreement_with_the_following_statements_i_felt_a_sense_of_connection_to_the_kansas_city_community_while_in_the_creativity_studio)%>% 
+  drop_na() %>% 
+  count(please_rate_your_agreement_with_the_following_statements_i_felt_a_sense_of_connection_to_the_kansas_city_community_while_in_the_creativity_studio) %>% 
+  arrange() %>% 
+  mutate(pct = n / sum(n)) %>% 
+  mutate(percent_display = percent(pct, accuracy = 1))
+```
+
+```{r, fig.width=10}
+ggplot(data = community,
+         mapping = aes(x = reorder(please_rate_your_agreement_with_the_following_statements_i_felt_a_sense_of_connection_to_the_kansas_city_community_while_in_the_creativity_studio, n),
+                       y = n,
+                       fill = please_rate_your_agreement_with_the_following_statements_i_felt_a_sense_of_connection_to_the_kansas_city_community_while_in_the_creativity_studio)) +
+  geom_col(show.legend = FALSE,
+           position = "dodge") +
+   coord_flip() +
+  scale_x_discrete(limits = c("Strongly Disagree", "Disagree", "Neither Agree nor Disagree", "Agree", "Strongly Agree")) + 
+   labs(title = "I felt a sense of connection to the\nKansas City community while in the Creativity Studio") +
+  theme(axis.title = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        panel.grid.major.y = element_line(colour = "lightgray")) +
+  theme(plot.title = element_markdown()) +
+  geom_text(data = community,
+            inherit.aes = TRUE,
+            aes(label = percent_display),
+            hjust = -.2) +
+  scale_fill_brewer(palette = "OrRd") +
+  theme_fivethirtyeight()
+```
+
+```{r}
+relaxed <- cssurvey %>% 
+  select(response_id, please_rate_your_agreement_with_the_following_statements_i_felt_relaxed_in_the_creativity_studio_space)%>% 
+  drop_na() %>% 
+  count(please_rate_your_agreement_with_the_following_statements_i_felt_relaxed_in_the_creativity_studio_space) %>% 
+  mutate(pct = n / sum(n)) %>% 
+  mutate(percent_display = percent(pct, accuracy = 1))
+```
+
+```{r}
+ggplot(data = relaxed,
+         mapping = aes(x = reorder(please_rate_your_agreement_with_the_following_statements_i_felt_relaxed_in_the_creativity_studio_space, n),
+                       y = n,
+                       fill = please_rate_your_agreement_with_the_following_statements_i_felt_relaxed_in_the_creativity_studio_space)) +
+  geom_col(show.legend = FALSE,
+           position = "dodge") +
+  coord_flip() +
+  scale_x_discrete(limits = c("Strongly Disagree", "Disagree", "Neither Agree nor Disagree", "Agree", "Strongly Agree")) + 
+   labs(title = "I felt relaxed in the Creativity Studio space.") +
+  theme(axis.title = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        panel.grid.major.y = element_line(colour = "lightgray")) +
+  theme(plot.title = element_markdown()) +
+  geom_text(data = relaxed,
+            inherit.aes = TRUE,
+            aes(label = percent_display),
+            hjust = -.2) +
+  scale_fill_brewer(palette = "Blues") +
+  scale_fill_brewer(palette = "Oranges") +
+  theme_fivethirtyeight()
+```
+
+```{r}
+social <- cssurvey %>% 
+  select(response_id, please_rate_your_agreement_with_the_following_statements_the_creativity_studio_gave_me_a_space_to_be_social_with_my_group)%>% 
+  drop_na() %>% 
+  count(please_rate_your_agreement_with_the_following_statements_the_creativity_studio_gave_me_a_space_to_be_social_with_my_group) %>% 
+  mutate(pct = n / sum(n)) %>% 
+  mutate(percent_display = percent(pct, accuracy = 1))
+```
+
+```{r}
+ggplot(data = social,
+         mapping = aes(x = reorder(please_rate_your_agreement_with_the_following_statements_the_creativity_studio_gave_me_a_space_to_be_social_with_my_group, n),
+                       y = n,
+                       fill = please_rate_your_agreement_with_the_following_statements_the_creativity_studio_gave_me_a_space_to_be_social_with_my_group)) +
+  geom_col(show.legend = FALSE,
+           position = "dodge") +
+  coord_flip() +
+  scale_x_discrete(limits = c("Strongly Disagree", "Disagree", "Neither Agree nor Disagree", "Agree", "Strongly Agree")) +  
+  labs(title = "The Creativity Studio gave me a space\nto be social with my group.") +
+  theme(axis.title = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        panel.grid.major.y = element_line(colour = "lightgray")) +
+  theme(plot.title = element_markdown()) +
+  geom_text(data = social,
+            inherit.aes = TRUE,
+            aes(label = percent_display),
+            hjust = -.2) +
+  scale_fill_brewer(palette = "Blues") +
+  scale_fill_brewer(palette = "OrRd") +
+  theme_fivethirtyeight()
+```
+
+```{r}
+interact <- cssurvey %>% 
+  select(response_id, please_rate_your_agreement_with_the_following_statements_the_creativity_studio_gave_me_a_space_to_interact_with_people_outside_of_my_group)%>% 
+  drop_na() %>% 
+  count(please_rate_your_agreement_with_the_following_statements_the_creativity_studio_gave_me_a_space_to_interact_with_people_outside_of_my_group) %>% 
+  mutate(pct = n / sum(n)) %>% 
+  mutate(percent_display = percent(pct, accuracy = 1))
+```
+
+```{r, fig.width=10}
+ggplot(data = interact,
+         mapping = aes(x = reorder(please_rate_your_agreement_with_the_following_statements_the_creativity_studio_gave_me_a_space_to_interact_with_people_outside_of_my_group, n),
+                       y = n,
+                       fill = please_rate_your_agreement_with_the_following_statements_the_creativity_studio_gave_me_a_space_to_interact_with_people_outside_of_my_group)) +
+  geom_col(show.legend = FALSE,
+           position = "dodge") +
+  coord_flip() +
+  scale_x_discrete(limits = c("Strongly Disagree", "Disagree", "Neither Agree nor Disagree", "Agree", "Strongly Agree")) +  
+  labs(title = "The Creativity Studio gave me a space\nto interact with people outside of my group.") +
+  theme(axis.title = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        panel.grid.major.y = element_line(colour = "lightgray")) +
+  theme(plot.title = element_markdown()) +
+  geom_text(data = interact,
+            inherit.aes = TRUE,
+            aes(label = percent_display),
+            hjust = -.2) +
+  scale_fill_brewer(palette = "OrRd") +
+  theme_fivethirtyeight()
+```
+
+```{r}
+art_deco_connection <- cssurvey %>% 
+  select(response_id, please_rate_your_agreement_with_the_following_statements_i_saw_connections_between_the_art_deco_exhibition_and_the_activities_available_in_the_creativity_studio)%>% 
+  drop_na() %>% 
+  count(please_rate_your_agreement_with_the_following_statements_i_saw_connections_between_the_art_deco_exhibition_and_the_activities_available_in_the_creativity_studio) %>% mutate(pct = n / sum(n)) %>% 
+  mutate(percent_display = percent(pct, accuracy = 1))
+```
+
+```{r, fig.width=10}
+ggplot(data = art_deco_connection,
+         mapping = aes(x =  reorder(please_rate_your_agreement_with_the_following_statements_i_saw_connections_between_the_art_deco_exhibition_and_the_activities_available_in_the_creativity_studio, n),
+                       y = n,
+                       fill = please_rate_your_agreement_with_the_following_statements_i_saw_connections_between_the_art_deco_exhibition_and_the_activities_available_in_the_creativity_studio)) +
+  geom_col(show.legend = FALSE,
+           position = "dodge") +
+  coord_flip() +
+  scale_x_discrete(limits = c("Strongly Disagree", "Disagree", "Neither Agree nor Disagree", "Agree", "Strongly Agree")) + 
+   labs(title = "I saw connections between the Art Deco exhibition\nand the activities available in the Creativity Studio.") +
+  theme(axis.title = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        panel.grid.major.y = element_line(colour = "lightgray")) +
+  theme(plot.title = element_markdown()) +
+  geom_text(data = art_deco_connection,
+            inherit.aes = TRUE,
+            aes(label = percent_display),
+            hjust = -.2) +
+  scale_fill_brewer(palette = "OrRd") +
+  theme_fivethirtyeight()
+```
